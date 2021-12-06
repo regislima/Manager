@@ -1,6 +1,6 @@
-using System;
 using System.Collections.Generic;
 using FluentValidation.Results;
+using Manager.Core.Exceptions;
 using Manager.Domain.Validators;
 
 namespace Manager.Domain.entities
@@ -11,7 +11,7 @@ namespace Manager.Domain.entities
         public string Email { get; private set; }
         public string Password { get; private set; }
 
-        // Contrutor vazio obrigatório usado pelo Entity Framework
+        // Entity Framework Core
         protected User() { }
 
         public User(string name, string email, string password)
@@ -49,7 +49,7 @@ namespace Manager.Domain.entities
             {
                 result.Errors.ForEach(error => _errors.Add(error.ErrorMessage));
 
-                throw new Exception($"Campos inválidos {_errors[0]}");
+                throw new DomainException("Campos inválidos", _errors);
             }
 
             return true;
