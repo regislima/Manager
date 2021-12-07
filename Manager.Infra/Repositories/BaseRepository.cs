@@ -51,7 +51,7 @@ namespace Manager.Infra.Repositories
         {
             var obj = await FindById(id);
 
-            if (obj.IsNull())
+            if (!obj.IsNull())
             {
                 _context.Remove(obj);
                 await _unitOfWork.CompleteAsync();

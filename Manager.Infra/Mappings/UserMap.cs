@@ -39,7 +39,6 @@ namespace Manager.Infra.Mappings
                     .HasColumnType("DATETIME");
             
             builder.Property(user => user.UpdatedAt)
-                    .IsRequired()
                     .HasColumnName("updatedat")
                     .HasColumnType("DATETIME");
         }

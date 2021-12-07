@@ -1,5 +1,3 @@
-using System.ComponentModel;
-using System.Data;
 using FluentValidation;
 using Manager.Domain.entities;
 
