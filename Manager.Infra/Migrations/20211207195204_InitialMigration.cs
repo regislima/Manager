@@ -17,7 +17,7 @@ namespace Manager.Infra.Migrations
                     email = table.Column<string>(type: "VARCHAR(180)", maxLength: 180, nullable: false),
                     password = table.Column<string>(type: "VARCHAR(15)", maxLength: 15, nullable: false),
                     createdat = table.Column<DateTime>(type: "DATETIME", nullable: false),
-                    updatedat = table.Column<DateTime>(type: "DATETIME", nullable: false)
+                    updatedat = table.Column<DateTime>(type: "DATETIME", nullable: true)
                 },
                 constraints: table =>
                 {

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Manager.Infra.Migrations
 {
     [DbContext(typeof(ManagerContext))]
-    [Migration("20211206182139_InitialMigration")]
+    [Migration("20211207195204_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -52,7 +52,7 @@ namespace Manager.Infra.Migrations
                         .HasColumnType("VARCHAR(15)")
                         .HasColumnName("password");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("DATETIME")
                         .HasColumnName("updatedat");
 

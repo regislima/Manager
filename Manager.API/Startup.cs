@@ -46,7 +46,7 @@ namespace Manager.API
             #region Injeção de Dependência (DI)
             services.AddSingleton(cfgMapper.CreateMapper());
             services.AddSingleton(d => Configuration);
-            services.AddDbContext<ManagerContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:SqlServerString"]), ServiceLifetime.Transient);
+            services.AddDbContext<ManagerContext>(options => options.UseSqlServer(Configuration.GetConnectionString("SqlServerString")), ServiceLifetime.Transient);
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();

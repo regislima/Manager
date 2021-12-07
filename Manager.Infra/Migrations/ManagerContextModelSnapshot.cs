@@ -50,7 +50,7 @@ namespace Manager.Infra.Migrations
                         .HasColumnType("VARCHAR(15)")
                         .HasColumnName("password");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("DATETIME")
                         .HasColumnName("updatedat");
 
