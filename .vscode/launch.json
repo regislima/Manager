@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/Manager.API/bin/Debug/net6.0/Manager.API.dll",
+            "program": "${workspaceFolder}/Manager.API/bin/Debug/net5.0/Manager.API.dll",
             "args": [],
             "cwd": "${workspaceFolder}/Manager.API",
             "stopAtEntry": false,

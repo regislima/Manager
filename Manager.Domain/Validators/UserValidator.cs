@@ -17,11 +17,11 @@ namespace Manager.Domain.Validators
                 .NotEmpty()
                 .WithMessage("Nome não pode ser nulo ou vazio")
 
-                .MaximumLength(3)
-                .WithMessage("Nome deve ter mínimo de 3 caracteres")
+                .MinimumLength(3)
+                .WithMessage("Nome deve ter no mínimo 3 caracteres")
                 
                 .MaximumLength(50)
-                .WithMessage("Nome deve ter máximo de 50 caracteres");
+                .WithMessage("Nome deve ter no máximo 50 caracteres");
                 
             RuleFor(user => user.Email)
                 .NotNull()
@@ -36,7 +36,7 @@ namespace Manager.Domain.Validators
                 .NotEmpty()
                 .WithMessage("Senha não pode ser nulo ou vazio")
 
-                .MaximumLength(6)
+                .MinimumLength(6)
                 .WithMessage("Senha deve ter mínimo de 6 caracteres")
                 
                 .MaximumLength(15)

@@ -29,10 +29,10 @@ namespace Manager.Services.Services
             if (!userExists.IsNull())
                 throw new DomainException("Usuário já cadastrado com email informado");
             
+            objDTO.CreatedAt = DateTime.Now;
+            objDTO.UpdatedAt = null;
             User user = _mapper.Map<User>(objDTO);
             user.Validate();
-
-            user.CreatedAt = DateTime.Now;
             User userCreated = await _userRepository.Create(user);
 
             return _mapper.Map<UserDTO>(userCreated);
@@ -78,10 +78,9 @@ namespace Manager.Services.Services
             if (userExists.IsNull())
                 throw new DomainException("Usuário não encontrado");
             
+            objDTO.UpdatedAt = DateTime.Now;
             User user = _mapper.Map<User>(objDTO);
             user.Validate();
-
-            user.UpdatedAt = DateTime.Now;
             User userUpdated = await _userRepository.Update(user);
 
             return _mapper.Map<UserDTO>(userUpdated);

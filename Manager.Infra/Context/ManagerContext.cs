@@ -17,10 +17,5 @@ namespace Manager.Infra.Context
         {
             builder.ApplyConfiguration(new UserMap());
         }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\MSSQLlocalDB;Database=usermanagerapi;User ID=FITBANK\regis.lima;Password=@Th159753th;Integrated Security=True;");
-        }
     }
 }

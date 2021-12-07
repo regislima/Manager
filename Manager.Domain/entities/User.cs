@@ -20,26 +20,21 @@ namespace Manager.Domain.entities
             Email = email;
             Password = password;
             _errors = new List<string>();
-
-            Validate();
         }
 
         public void ChangeName(string name)
         {
             Name = Name;
-            Validate();
         }
 
         public void ChangeEmail(string email)
         {
             Email = email;
-            Validate();
         }
 
         public void ChangePassword(string password)
         {
             Password = password;
-            Validate();
         }
 
         public override bool Validate()
