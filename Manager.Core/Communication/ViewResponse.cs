@@ -1,6 +1,4 @@
-using System;
-using System.Collections.Generic;
-using Manager.Core.Extensions;
+using System.Text.Json;
 
 namespace Manager.Core.Communication
 {
