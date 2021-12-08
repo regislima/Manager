@@ -27,7 +27,7 @@ namespace Manager.Services.Services
             var userExists = await _userRepository.FindByEmail(objDTO.Email);
 
             if (!userExists.IsNull())
-                throw new DomainException("Usuário já cadastrado com email informado");
+                throw new DomainException("Já existe cadastro com email informado");
             
             objDTO.CreatedAt = DateTime.Now;
             objDTO.UpdatedAt = null;
@@ -73,15 +73,21 @@ namespace Manager.Services.Services
 
         public async Task<UserDTO> Update(UserDTO objDTO)
         {
-            var userExists = await _userRepository.FindById(objDTO.Id);
+            User userExists = await _userRepository.FindById(objDTO.Id);
 
             if (userExists.IsNull())
                 throw new DomainException("Usuário não encontrado");
             
+            var emailExists = await _userRepository.FindByEmail(objDTO.Email);
+
+            if (!objDTO.Email.Equals(userExists.Email) && !emailExists.IsNull())
+                throw new DomainException("Já existe cadastro com email informado");
+            
+            objDTO.CreatedAt = userExists.CreatedAt;
             objDTO.UpdatedAt = DateTime.Now;
-            User user = _mapper.Map<User>(objDTO);
-            user.Validate();
-            User userUpdated = await _userRepository.Update(user);
+            userExists = _mapper.Map<User>(objDTO);
+            userExists.Validate();
+            User userUpdated = await _userRepository.Update(userExists);
 
             return _mapper.Map<UserDTO>(userUpdated);
         }

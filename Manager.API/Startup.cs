@@ -9,7 +9,6 @@ using Manager.Services.Interfaces;
 using Manager.Services.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -39,7 +38,8 @@ namespace Manager.API
             MapperConfiguration cfgMapper = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<User, UserDTO>().ReverseMap();
-                cfg.CreateMap<UserViewCreate, UserDTO>().ReverseMap();
+                cfg.CreateMap<UserViewCreate, UserDTO>();
+                cfg.CreateMap<UserViewUpdate, UserDTO>();
             });
             #endregion
 

@@ -1,4 +1,5 @@
 using System;
+using Newtonsoft.Json;
 
 namespace Manager.Services.DTO
 {
@@ -10,15 +11,5 @@ namespace Manager.Services.DTO
         public string Password { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
-        
-        public UserDTO() { }
-
-        public UserDTO(long id, string name, string email, string password)
-        {
-            this.Id = id;
-            this.Name = name;
-            this.Email = email;
-            this.Password = password;
-        }
     }
 }
