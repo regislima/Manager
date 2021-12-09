@@ -31,7 +31,7 @@ namespace Manager.Domain.Validators
                 .EmailAddress()
                 .WithMessage("Email inválido");
             
-             RuleFor(user => user.Password)
+            RuleFor(user => user.Password)
                 .NotNull()
                 .NotEmpty()
                 .WithMessage("Senha não pode ser nulo ou vazio")
@@ -40,6 +40,10 @@ namespace Manager.Domain.Validators
                 .WithMessage("Senha deve ter mínimo de 6 caracteres")
                 
                 .MaximumLength(15)
+                .WithMessage("Senha deve ter máximo de 15 caracteres");
+
+            RuleFor(user => user.Role)
+                .IsInEnum()
                 .WithMessage("Senha deve ter máximo de 15 caracteres");
         }
     }

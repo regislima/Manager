@@ -10,38 +10,44 @@ namespace Manager.Infra.Mappings
         {
             builder.ToTable("Users");
             builder.HasKey(user => user.Id);
-            
+
             builder.Property(user => user.Id)
                     .UseIdentityColumn()
                     .HasColumnType("BIGINT");
-            
+
             builder.Property(user => user.Name)
                     .IsRequired()
                     .HasMaxLength(50)
                     .HasColumnName("name")
-                    .HasColumnType("VARCHAR(50)");
-            
+                    .HasColumnType("VARCHAR");
+
             builder.Property(user => user.Email)
                     .IsRequired()
                     .HasMaxLength(180)
                     .HasColumnName("email")
-                    .HasColumnType("VARCHAR(180)");
-            
+                    .HasColumnType("VARCHAR");
+
             builder.Property(user => user.Password)
                     .IsRequired()
-                    .HasMaxLength(15)
+                    .HasMaxLength(100)
                     .HasColumnName("password")
-                    .HasColumnType("VARCHAR(15)");
-            
+                    .HasColumnType("VARCHAR");
+
+            builder.Property(user => user.Role)
+                    .IsRequired(false)
+                    .HasMaxLength(2)
+                    .HasColumnName("role")
+                    .HasColumnType("TINYINT");
+
             builder.Property(user => user.CreatedAt)
                     .IsRequired()
                     .HasColumnName("createdat")
                     .HasColumnType("DATETIME");
-            
+
             builder.Property(user => user.UpdatedAt)
+                    .IsRequired(false)
                     .HasColumnName("updatedat")
-                    .HasColumnType("DATETIME")
-                    .IsRequired(false);
+                    .HasColumnType("DATETIME");
         }
     }
 }

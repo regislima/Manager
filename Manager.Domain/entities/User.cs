@@ -10,6 +10,7 @@ namespace Manager.Domain.entities
         public string Name { get; private set; }
         public string Email { get; private set; }
         public string Password { get; private set; }
+        public Role Role { get; private set; }
 
         // Entity Framework Core
         protected User() { }
@@ -35,6 +36,11 @@ namespace Manager.Domain.entities
         public void ChangePassword(string password)
         {
             Password = password;
+        }
+
+        public void ChangeRole(Role role)
+        {
+            Role = role;
         }
 
         public override bool Validate()
