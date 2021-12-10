@@ -6,11 +6,11 @@ using Manager.Domain.entities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Manager.Services.Security
+namespace Manager.Security.Criptography
 {
     public class TokenService
     {
-        public static string GenerateToken(IConfiguration configuration, User user)
+        public static string GenerateJWTToken(IConfiguration configuration, User user)
         {
             int tokenExpiredTimeLapse = int.Parse(configuration["TokenExpireTimeLapse"]);
             byte[] key = Encoding.UTF8.GetBytes(configuration["SecretKey"]);
