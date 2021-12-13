@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Manager.API.Controller
 {
     [ApiController]
+    [Route("api")]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -25,7 +26,7 @@ namespace Manager.API.Controller
         }
 
         [HttpPost]
-        [Route("/api/v1/users/create")]
+        [Route("v1/users/create")]
         public async Task<IActionResult> Create([FromBody] UserViewCreate userView)
         {
             try
@@ -49,7 +50,7 @@ namespace Manager.API.Controller
         }
 
         [HttpPut]
-        [Route("/api/v1/users/update")]
+        [Route("v1/users/update")]
         public async Task<IActionResult> Update([FromBody] UserViewUpdate userView)
         {
             try
@@ -73,7 +74,7 @@ namespace Manager.API.Controller
         }
 
         [HttpDelete]
-        [Route("/api/v1/users/remove/{id}")]
+        [Route("v1/users/remove/{id}")]
         public async Task<IActionResult> Remove(long id)
         {
             try
@@ -93,7 +94,7 @@ namespace Manager.API.Controller
         }
 
         [HttpGet]
-        [Route("/api/v1/users/find/id")]
+        [Route("v1/users/find/id")]
         public async Task<IActionResult> Find([FromQuery] long id)
         {
             try
@@ -113,7 +114,7 @@ namespace Manager.API.Controller
         }
 
         [HttpGet]
-        [Route("/api/v1/users/find/all")]
+        [Route("v1/users/find/all")]
         public async Task<IActionResult> FindAll()
         {
             try
@@ -133,7 +134,7 @@ namespace Manager.API.Controller
         }
 
         [HttpGet]
-        [Route("/api/v1/users/find/email")]
+        [Route("v1/users/find/email")]
         public async Task<IActionResult> FindByEmail([FromQuery] string email)
         {
             try
@@ -153,7 +154,7 @@ namespace Manager.API.Controller
         }
 
         [HttpGet]
-        [Route("/api/v1/users/find/name")]
+        [Route("v1/users/find/name")]
         public async Task<IActionResult> FindByName([FromQuery] string name)
         {
             try

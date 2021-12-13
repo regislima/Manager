@@ -1,4 +1,6 @@
+using System.Text;
 using AutoMapper;
+using Manager.API.ViewModels.Auth;
 using Manager.API.ViewModels.User;
 using Manager.Domain.entities;
 using Manager.Infra.Context;
@@ -7,12 +9,13 @@ using Manager.Infra.Repositories;
 using Manager.Services.DTO;
 using Manager.Services.Interfaces;
 using Manager.Services.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Manager.API
 {
@@ -29,15 +32,38 @@ namespace Manager.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Manager.API", Version = "v1" });
-            });
+
+            #region Autenticação
+            byte[] keyEncode = Encoding.UTF8.GetBytes(Configuration["SecretKey"]);
+            services.AddAuthentication(auth => 
+                {
+                    auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(opt =>
+                {
+                    // HTTPS on/off
+                    opt.RequireHttpsMetadata = false;
+                    opt.SaveToken = true;
+                    opt.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(keyEncode),
+                        ValidateIssuer = true,
+                        ValidIssuer = Configuration["Issuer"],
+                        ValidateAudience = true,
+                        ValidAudience = Configuration["Audience"],
+                        ValidateLifetime = true,
+                    };
+                });
+            #endregion
 
             #region AutoMapper
             MapperConfiguration cfgMapper = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<User, UserDTO>().ReverseMap();
+                cfg.CreateMap<AuthView, AuthDTO>().ReverseMap();
+                cfg.CreateMap<AuthView, UserDTO>();
                 cfg.CreateMap<UserViewCreate, UserDTO>();
                 cfg.CreateMap<UserViewUpdate, UserDTO>();
             });
@@ -59,12 +85,12 @@ namespace Manager.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Manager.API v1"));
             }
 
             app.UseHttpsRedirection();
+            app.UseCors();
             app.UseRouting();
+            app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
