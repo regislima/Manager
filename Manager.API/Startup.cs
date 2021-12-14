@@ -1,7 +1,6 @@
 using System.Text;
 using AutoMapper;
-using Manager.API.ViewModels.Auth;
-using Manager.API.ViewModels.User;
+using Manager.API.ViewModels;
 using Manager.Domain.entities;
 using Manager.Infra.Context;
 using Manager.Infra.Interfaces;
@@ -34,7 +33,7 @@ namespace Manager.API
             services.AddControllers();
 
             #region Autenticação
-            byte[] keyEncode = Encoding.UTF8.GetBytes(Configuration["SecretKey"]);
+            byte[] keyEncode = Encoding.UTF8.GetBytes(Configuration["Jwt:SecretKey"]);
             services.AddAuthentication(auth => 
                 {
                     auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -50,9 +49,9 @@ namespace Manager.API
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(keyEncode),
                         ValidateIssuer = true,
-                        ValidIssuer = Configuration["Issuer"],
+                        ValidIssuer = Configuration["Jwt:Issuer"],
                         ValidateAudience = true,
-                        ValidAudience = Configuration["Audience"],
+                        ValidAudience = Configuration["Jwt:Audience"],
                         ValidateLifetime = true,
                     };
                 });
@@ -62,10 +61,8 @@ namespace Manager.API
             MapperConfiguration cfgMapper = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<User, UserDTO>().ReverseMap();
-                cfg.CreateMap<AuthView, AuthDTO>().ReverseMap();
-                cfg.CreateMap<AuthView, UserDTO>();
-                cfg.CreateMap<UserViewCreate, UserDTO>();
-                cfg.CreateMap<UserViewUpdate, UserDTO>();
+                cfg.CreateMap<UserDTO, AuthDTO>();
+                cfg.CreateMap<UserInputView, UserDTO>();
             });
             #endregion
 
@@ -73,6 +70,7 @@ namespace Manager.API
             services.AddSingleton(_ => Configuration);
             services.AddSingleton(cfgMapper.CreateMapper());
             services.AddDbContext<ManagerContext>();
+            services.AddScoped<AuthService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();

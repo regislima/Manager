@@ -1,3 +1,4 @@
+using System;
 using Manager.Domain.entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -12,42 +13,47 @@ namespace Manager.Infra.Mappings
             builder.HasKey(user => user.Id);
 
             builder.Property(user => user.Id)
-                    .UseIdentityColumn()
-                    .HasColumnType("BIGINT");
+                .UseIdentityColumn()
+                .HasColumnType("BIGINT");
 
             builder.Property(user => user.Name)
-                    .IsRequired()
-                    .HasMaxLength(50)
-                    .HasColumnName("name")
-                    .HasColumnType("VARCHAR");
+                .IsRequired()
+                .HasMaxLength(50)
+                .HasColumnName("name")
+                .HasColumnType("VARCHAR");
 
             builder.Property(user => user.Email)
-                    .IsRequired()
-                    .HasMaxLength(180)
-                    .HasColumnName("email")
-                    .HasColumnType("VARCHAR");
+                .IsRequired()
+                .HasMaxLength(180)
+                .HasColumnName("email")
+                .HasColumnType("VARCHAR");
 
             builder.Property(user => user.Password)
-                    .IsRequired()
-                    .HasMaxLength(100)
-                    .HasColumnName("password")
-                    .HasColumnType("VARCHAR");
+                .IsRequired()
+                .HasMaxLength(100)
+                .HasColumnName("password")
+                .HasColumnType("VARCHAR");
 
             builder.Property(user => user.Role)
-                    .IsRequired(false)
-                    .HasMaxLength(2)
-                    .HasColumnName("role")
-                    .HasColumnType("TINYINT");
+                .IsRequired()
+                .HasMaxLength(2)
+                .HasColumnName("role")
+                .HasColumnType("TINYINT");
 
             builder.Property(user => user.CreatedAt)
-                    .IsRequired()
-                    .HasColumnName("createdat")
-                    .HasColumnType("DATETIME");
+                .IsRequired()
+                .HasColumnName("createdat")
+                .HasColumnType("DATETIME");
 
             builder.Property(user => user.UpdatedAt)
-                    .IsRequired(false)
-                    .HasColumnName("updatedat")
-                    .HasColumnType("DATETIME");
+                .IsRequired(false)
+                .HasColumnName("updatedat")
+                .HasColumnType("DATETIME");
+        
+            builder.HasData
+            (
+                new User("Régis", "regis@email.com", "123456789", Role.Administrator)
+            );
         }
     }
 }

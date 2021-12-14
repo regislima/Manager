@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using FluentValidation.Results;
 using Manager.Core.Exceptions;
@@ -15,11 +16,14 @@ namespace Manager.Domain.entities
         // Entity Framework Core
         protected User() { }
 
-        public User(string name, string email, string password)
+        public User(string name, string email, string password, Role role)
         {
+            Id = 1;
             Name = name;
             Email = email;
             Password = password;
+            Role = role;
+            CreatedAt = DateTime.Now;
             _errors = new List<string>();
         }
 

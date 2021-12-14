@@ -1,9 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 using Manager.Domain.entities;
 
-namespace Manager.API.ViewModels.User
+namespace Manager.API.ViewModels
 {
-    public class UserViewCreate
+    public class UserInputView : BaseInputView
     {
         [Required(ErrorMessage = "O Nome é obrigatório")]
         [MinLength(3, ErrorMessage = "O Nome deve ter no mínimo 3 caracteres")]

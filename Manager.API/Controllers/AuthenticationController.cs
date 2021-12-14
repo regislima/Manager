@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using AutoMapper;
-using Manager.API.ViewModels.Auth;
+using Manager.API.ViewModels;
 using Manager.Core.Communication;
 using Manager.Core.Exceptions;
 using Manager.Core.Extensions;
@@ -29,21 +29,19 @@ namespace Manager.API.Controllers
         
         [HttpPost]
         [Route("v1/auth/login")]
-        public async Task<ActionResult> authenticate([FromBody] AuthView authView)
+        public async Task<ActionResult> authenticate([FromBody] AuthInputView authInputView)
         {
             try
             {
                 if (!ModelState.IsValid)
-                    return BadRequest(ViewResponse.Error(authView, ModelState.GetErrorMessage()));
+                    return BadRequest(ViewResponse.Error(authInputView, ModelState.GetErrorMessage()));
 
-                UserDTO userDTO = _mapper.Map<UserDTO>(authView);
-                userDTO = await _userService.FindByEmail(userDTO.Email);
+                UserDTO userDTO = await _userService.FindByEmail(authInputView.Email);
 
                 if (userDTO.IsNull())
-                    return BadRequest(ViewResponse.Error(authView, "Email ou senha inválidos."));
+                    return BadRequest(ViewResponse.Error(authInputView, "Email ou senha inválidos."));
 
-                AuthDTO authDTO = new AuthDTO();
-                authDTO.UserDTO = userDTO;
+                AuthDTO authDTO = _mapper.Map<AuthDTO>(userDTO);
                 authDTO.Token = _authService.GenerateJWTToken(userDTO);
 
                 return Ok(ViewResponse.Success(authDTO));

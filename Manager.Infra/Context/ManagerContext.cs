@@ -26,7 +26,23 @@ namespace Manager.Infra.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
-                optionsBuilder.UseSqlServer(_configuration["ConnectionStrings:DefaultConnection"]);
+            {
+                switch (_configuration["Configs:Database"])
+                {
+                    case "mysql":
+                    case "mariadb":
+                        optionsBuilder.UseMySql(ServerVersion.AutoDetect(_configuration.GetConnectionString("MySqlConnection")));
+                        break;
+
+                    case "sqlserver":
+                        optionsBuilder.UseSqlServer(_configuration.GetConnectionString("SqlServerConnection"));
+                        break;
+                    
+                    default:
+                        optionsBuilder.UseInMemoryDatabase("manager-api-database");
+                        break;
+                }
+            }
         }
     }
 }

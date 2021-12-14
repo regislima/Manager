@@ -12,8 +12,8 @@ namespace Manager.Security.Criptography
     {
         public static string GenerateJWTToken(IConfiguration configuration, User user)
         {
-            int tokenExpiredTimeLapse = int.Parse(configuration["TokenExpireTimeLapse"]);
-            byte[] key = Encoding.UTF8.GetBytes(configuration["SecretKey"]);
+            int tokenExpiredTimeLapse = int.Parse(configuration["Jwt:TokenExpireTimeLapse"]);
+            byte[] key = Encoding.UTF8.GetBytes(configuration["Jwt:SecretKey"]);
             JwtSecurityTokenHandler jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
             
             SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
@@ -24,8 +24,8 @@ namespace Manager.Security.Criptography
                     new Claim(ClaimTypes.Role, user.Role.ToString())
                 }),
 
-                Issuer = configuration["Issuer"],
-                Audience = configuration["Audience"],
+                Issuer = configuration["Jwt:Issuer"],
+                Audience = configuration["Jwt:Audience"],
                 Expires = DateTime.UtcNow.AddHours(tokenExpiredTimeLapse),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
             };

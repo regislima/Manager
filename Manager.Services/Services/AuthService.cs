@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using AutoMapper;
 using Manager.Domain.entities;
 using Manager.Security.Criptography;

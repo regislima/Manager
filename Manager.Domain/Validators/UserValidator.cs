@@ -43,8 +43,9 @@ namespace Manager.Domain.Validators
                 .WithMessage("Senha deve ter máximo de 15 caracteres");
 
             RuleFor(user => user.Role)
+                .NotNull()
                 .IsInEnum()
-                .WithMessage("Senha deve ter máximo de 15 caracteres");
+                .WithMessage("O usuário deve ter um nível de acesso");
         }
     }
 }

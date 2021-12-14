@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
-using Manager.API.ViewModels.User;
+using Manager.API.ViewModels;
 using Manager.Core.Communication;
 using Manager.Core.Exceptions;
 using Manager.Core.Extensions;
@@ -27,14 +27,14 @@ namespace Manager.API.Controller
 
         [HttpPost]
         [Route("v1/users/create")]
-        public async Task<IActionResult> Create([FromBody] UserViewCreate userView)
+        public async Task<IActionResult> Create([FromBody] UserInputView userInputView)
         {
             try
             {
                 if (!ModelState.IsValid)
-                    return BadRequest(ViewResponse.Error(userView, ModelState.GetErrorMessage()));
+                    return BadRequest(ViewResponse.Error(userInputView, ModelState.GetErrorMessage()));
                 
-                UserDTO userDTO = _mapper.Map<UserDTO>(userView);
+                UserDTO userDTO = _mapper.Map<UserDTO>(userInputView);
                 UserDTO userCreated = await _userService.Create(userDTO);
                 
                 return Ok(ViewResponse.Success(userCreated));
@@ -51,14 +51,14 @@ namespace Manager.API.Controller
 
         [HttpPut]
         [Route("v1/users/update")]
-        public async Task<IActionResult> Update([FromBody] UserViewUpdate userView)
+        public async Task<IActionResult> Update([FromBody] UserInputView userInputView)
         {
             try
             {
                 if (!ModelState.IsValid)
-                    return BadRequest(ViewResponse.Error(userView, ModelState.GetErrorMessage()));
+                    return BadRequest(ViewResponse.Error(userInputView, ModelState.GetErrorMessage()));
                 
-                UserDTO userDTO = _mapper.Map<UserDTO>(userView);
+                UserDTO userDTO = _mapper.Map<UserDTO>(userInputView);
                 UserDTO userUpdated = await _userService.Update(userDTO);
                 
                 return Ok(ViewResponse.Success(userUpdated));
