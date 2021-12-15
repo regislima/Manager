@@ -22,5 +22,10 @@ namespace Manager.Services.Services
             User user = _mapper.Map<User>(userDTO);
             return TokenService.GenerateJWTToken(_configuration, user);
         }
+
+        public bool CheckPassword(string password, string hash)
+        {
+            return password.Equals(hash);
+        }
     }
 }

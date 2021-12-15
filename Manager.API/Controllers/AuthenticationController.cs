@@ -42,6 +42,10 @@ namespace Manager.API.Controllers
                     return BadRequest(ViewResponse.Error(authInputView, "Email ou senha inválidos."));
 
                 AuthDTO authDTO = _mapper.Map<AuthDTO>(userDTO);
+                
+                if (!_authService.CheckPassword(authInputView.Password, userDTO.Password))
+                    return BadRequest(ViewResponse.Error(authInputView, "Email ou senha inválidos."));
+                
                 authDTO.Token = _authService.GenerateJWTToken(userDTO);
 
                 return Ok(ViewResponse.Success(authDTO));

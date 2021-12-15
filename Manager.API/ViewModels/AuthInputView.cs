@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using Manager.Domain.entities;
 
 namespace Manager.API.ViewModels
 {
@@ -14,8 +13,5 @@ namespace Manager.API.ViewModels
         [MinLength(6, ErrorMessage = "A Senha deve ter no mínimo 6 caracteres")]
         [MaxLength(15, ErrorMessage = "A Senha deve ter no máximo 15 caracteres")]
         public string Password { get; set; }
-
-        [Required(ErrorMessage = "O nivel de acesso é obrigatório")]
-        public Role Role { get; set; }
     }
 }
