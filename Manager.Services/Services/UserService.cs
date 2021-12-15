@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Manager.Core.Exceptions;
@@ -33,8 +34,8 @@ namespace Manager.Services.Services
             objDTO.CreatedAt = DateTime.Now;
             objDTO.UpdatedAt = null;
             User user = _mapper.Map<User>(objDTO);
-            user.ChangePassword(Convert.ToBase64String(new CryptService().SHA256Hash(objDTO.Password)));
             user.Validate();
+            user.ChangePassword(Convert.ToBase64String(new CryptService().SHA256Hash(objDTO.Password)));
             User userCreated = await _userRepository.Create(user);
 
             return _mapper.Map<UserDTO>(userCreated);
@@ -89,15 +90,15 @@ namespace Manager.Services.Services
             objDTO.CreatedAt = userExists.CreatedAt;
             objDTO.UpdatedAt = DateTime.Now;
             userExists = _mapper.Map<User>(objDTO);
+            userExists.Validate();
 
-            byte[] hashedPassword = Convert.FromBase64String(userExists.Password);
+            byte[] hashedPassword = Encoding.UTF8.GetBytes(userExists.Password);
             CryptService cryptService = new CryptService();
 
             // Verifica se houve mudança na senha
             if (!cryptService.CheckHash(objDTO.Password, hashedPassword))
                 userExists.ChangePassword(Convert.ToBase64String(new CryptService().SHA256Hash(objDTO.Password)));
             
-            userExists.Validate();
             User userUpdated = await _userRepository.Update(userExists);
 
             return _mapper.Map<UserDTO>(userUpdated);

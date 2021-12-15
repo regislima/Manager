@@ -1,10 +1,13 @@
 using System;
+using System.ComponentModel;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Manager.Core.Extensions;
 using Manager.Domain.entities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Extensions;
 
 namespace Manager.Security.Criptography
 {
@@ -21,7 +24,7 @@ namespace Manager.Security.Criptography
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, user.Name),
-                    new Claim(ClaimTypes.Role, user.Role.ToString())
+                    new Claim(ClaimTypes.Role, user.Role.GetEnumDescription())
                 }),
 
                 Issuer = configuration["Jwt:Issuer"],

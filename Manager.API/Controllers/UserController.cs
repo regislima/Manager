@@ -8,6 +8,7 @@ using Manager.Core.Exceptions;
 using Manager.Core.Extensions;
 using Manager.Services.DTO;
 using Manager.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Manager.API.Controller
@@ -27,6 +28,7 @@ namespace Manager.API.Controller
 
         [HttpPost]
         [Route("v1/users/create")]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Create([FromBody] UserInputView userInputView)
         {
             try
@@ -51,6 +53,7 @@ namespace Manager.API.Controller
 
         [HttpPut]
         [Route("v1/users/update")]
+        [Authorize(Roles = "Admiministrator, Normal")]
         public async Task<IActionResult> Update([FromBody] UserInputView userInputView)
         {
             try
@@ -75,6 +78,7 @@ namespace Manager.API.Controller
 
         [HttpDelete]
         [Route("v1/users/remove/{id}")]
+        [Authorize(Roles = "Admiministrator")]
         public async Task<IActionResult> Remove(long id)
         {
             try
@@ -95,6 +99,7 @@ namespace Manager.API.Controller
 
         [HttpGet]
         [Route("v1/users/find/id")]
+        [Authorize(Roles = "Admiministrator, Normal")]
         public async Task<IActionResult> Find([FromQuery] long id)
         {
             try
@@ -115,6 +120,7 @@ namespace Manager.API.Controller
 
         [HttpGet]
         [Route("v1/users/find/all")]
+        [Authorize(Roles = "Admiministrator")]
         public async Task<IActionResult> FindAll()
         {
             try
@@ -135,6 +141,7 @@ namespace Manager.API.Controller
 
         [HttpGet]
         [Route("v1/users/find/email")]
+        [Authorize(Roles = "Admiministrator")]
         public async Task<IActionResult> FindByEmail([FromQuery] string email)
         {
             try
@@ -155,6 +162,7 @@ namespace Manager.API.Controller
 
         [HttpGet]
         [Route("v1/users/find/name")]
+        [Authorize(Roles = "Admiministrator")]
         public async Task<IActionResult> FindByName([FromQuery] string name)
         {
             try

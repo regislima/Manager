@@ -1,4 +1,6 @@
+using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Manager.Core.Extensions
@@ -18,6 +20,14 @@ namespace Manager.Core.Extensions
             return dictionary.SelectMany(m => m.Value.Errors)
                     .Select(m => m.ErrorMessage)
                     .First();
+        }
+
+        public static string GetEnumDescription<TEnum>(this TEnum @enum)
+        {
+            FieldInfo info = @enum.GetType().GetField(@enum.ToString());
+            var attributes = (DescriptionAttribute[])info.GetCustomAttributes(typeof(DescriptionAttribute), false);
+
+            return attributes?[0].Description ?? @enum.ToString();
         }
     }
 }

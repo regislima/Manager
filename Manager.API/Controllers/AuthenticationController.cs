@@ -8,12 +8,14 @@ using Manager.Core.Extensions;
 using Manager.Services.DTO;
 using Manager.Services.Interfaces;
 using Manager.Services.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Manager.API.Controllers
 {
     [ApiController]
     [Route("api")]
+    [AllowAnonymous]
     public class AuthenticationController : ControllerBase
     {
         private readonly IUserService _userService;

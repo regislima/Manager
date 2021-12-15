@@ -52,7 +52,7 @@ namespace Manager.Infra.Mappings
         
             builder.HasData
             (
-                new User("Régis", "regis@email.com", "123456789", Role.Administrator)
+                new User("Régis", "regis@email.com", "FeKw08M4keuw8e9gnsQZQgwg4yDOlMZfvIwzEkSOsiU=", Role.Administrator)
             );
         }
     }
