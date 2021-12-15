@@ -1,3 +1,4 @@
+using System.Text;
 using AutoMapper;
 using Manager.Domain.entities;
 using Manager.Security.Criptography;
@@ -25,7 +26,9 @@ namespace Manager.Services.Services
 
         public bool CheckPassword(string password, string hash)
         {
-            return password.Equals(hash);
+            byte[] hashArray = Encoding.UTF8.GetBytes(hash);
+            
+            return new CryptService().CheckHash(password, hashArray);
         }
     }
 }

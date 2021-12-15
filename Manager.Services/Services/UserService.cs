@@ -6,6 +6,7 @@ using Manager.Core.Exceptions;
 using Manager.Core.Extensions;
 using Manager.Domain.entities;
 using Manager.Infra.Interfaces;
+using Manager.Security.Criptography;
 using Manager.Services.DTO;
 using Manager.Services.Interfaces;
 
@@ -32,6 +33,7 @@ namespace Manager.Services.Services
             objDTO.CreatedAt = DateTime.Now;
             objDTO.UpdatedAt = null;
             User user = _mapper.Map<User>(objDTO);
+            user.ChangePassword(Convert.ToBase64String(new CryptService().SHA256Hash(objDTO.Password)));
             user.Validate();
             User userCreated = await _userRepository.Create(user);
 
@@ -78,14 +80,23 @@ namespace Manager.Services.Services
             if (userExists.IsNull())
                 throw new DomainException("Usuário não encontrado");
             
+            // Verifica se existe algum usuário cadastrado com o email informado
             var emailExists = await _userRepository.FindByEmail(objDTO.Email);
 
-            if (!objDTO.Email.Equals(userExists.Email) && !emailExists.IsNull())
+            if (!emailExists.IsNull())
                 throw new DomainException("Já existe cadastro com email informado");
             
             objDTO.CreatedAt = userExists.CreatedAt;
             objDTO.UpdatedAt = DateTime.Now;
             userExists = _mapper.Map<User>(objDTO);
+
+            byte[] hashedPassword = Convert.FromBase64String(userExists.Password);
+            CryptService cryptService = new CryptService();
+
+            // Verifica se houve mudança na senha
+            if (!cryptService.CheckHash(objDTO.Password, hashedPassword))
+                userExists.ChangePassword(Convert.ToBase64String(new CryptService().SHA256Hash(objDTO.Password)));
+            
             userExists.Validate();
             User userUpdated = await _userRepository.Update(userExists);
 
