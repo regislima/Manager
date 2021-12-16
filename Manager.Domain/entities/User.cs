@@ -16,9 +16,9 @@ namespace Manager.Domain.entities
         // Entity Framework Core
         protected User() { }
 
-        public User(string name, string email, string password, Role role)
+        public User(long id, string name, string email, string password, Role role)
         {
-            Id = 1;
+            Id = id;
             Name = name;
             Email = email;
             Password = password;

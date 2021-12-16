@@ -1,3 +1,4 @@
+using Manager.Core.Extensions;
 using Manager.Domain.entities;
 using Manager.Infra.Mappings;
 using Microsoft.EntityFrameworkCore;
@@ -8,15 +9,12 @@ namespace Manager.Infra.Context
     public class ManagerContext : DbContext
     {
         public DbSet<User> Users { get; set; }
-        private readonly IConfiguration _configuration;
+        private IConfiguration _configuration;
 
         // Entity Framework Core
         public ManagerContext() { }
 
-        public ManagerContext(DbContextOptions<ManagerContext> options, IConfiguration configuration) : base(options)
-        {
-            _configuration = configuration;
-        }
+        public ManagerContext(DbContextOptions<ManagerContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -27,6 +25,11 @@ namespace Manager.Infra.Context
         {
             if (!optionsBuilder.IsConfigured)
             {
+                _configuration = new ConfigurationBuilder()
+                    .AddJsonFile($"appsettings.Development.json", optional: false, reloadOnChange: true)
+                    .AddEnvironmentVariables()
+                    .Build();
+
                 switch (_configuration["Configs:Database"])
                 {
                     case "mysql":
@@ -39,7 +42,7 @@ namespace Manager.Infra.Context
                         break;
                     
                     default:
-                        optionsBuilder.UseInMemoryDatabase("manager-api-database");
+                        optionsBuilder.UseInMemoryDatabase(_configuration.GetConnectionString("InMemoryConnection"));
                         break;
                 }
             }
