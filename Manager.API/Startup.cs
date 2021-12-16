@@ -32,7 +32,7 @@ namespace Manager.API
         {
             services.AddControllers();
 
-            #region Autenticação
+            #region Autenticação JWT
             byte[] keyEncode = Encoding.UTF8.GetBytes(Configuration["Jwt:SecretKey"]);
             services.AddAuthentication(auth => 
                 {

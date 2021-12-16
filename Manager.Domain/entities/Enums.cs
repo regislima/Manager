@@ -4,7 +4,7 @@ namespace Manager.Domain.entities
 {
     public enum Role
     {
-        [Description("Administrador")]
+        [Description("Administrator")]
         Administrator,
 
         [Description("Normal")]
