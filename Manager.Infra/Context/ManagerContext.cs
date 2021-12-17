@@ -1,3 +1,4 @@
+using System;
 using Manager.Core.Extensions;
 using Manager.Domain.entities;
 using Manager.Infra.Mappings;
@@ -9,12 +10,15 @@ namespace Manager.Infra.Context
     public class ManagerContext : DbContext
     {
         public DbSet<User> Users { get; set; }
-        private IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
 
         // Entity Framework Core
         public ManagerContext() { }
 
-        public ManagerContext(DbContextOptions<ManagerContext> options) : base(options) { }
+        public ManagerContext(DbContextOptions<ManagerContext> options, IConfiguration configuration) : base(options)
+        {
+            _configuration = configuration;
+        }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -23,13 +27,15 @@ namespace Manager.Infra.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
+            if (_configuration.IsNull())
             {
-                _configuration = new ConfigurationBuilder()
-                    .AddJsonFile($"appsettings.Development.json", optional: false, reloadOnChange: true)
-                    .AddEnvironmentVariables()
-                    .Build();
-
+                optionsBuilder.UseMySql(
+                    @"Server=172.17.0.1;Port=3306;Database=managerapi;Uid=regis;Pwd=root",
+                    new MySqlServerVersion(new Version(10, 6, 4))
+                );
+            }
+            else
+            {
                 switch (_configuration["Configs:Database"])
                 {
                     case "mysql":
