@@ -28,19 +28,17 @@ namespace Manager.Infra.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (_configuration.IsNull())
-            {
-                optionsBuilder.UseMySql(
-                    @"Server=172.17.0.1;Port=3306;Database=managerapi;Uid=regis;Pwd=root",
-                    new MySqlServerVersion(new Version(10, 6, 4))
-                );
-            }
+                throw new Exception("Arquivo de configuração não encontrado");
             else
             {
-                switch (_configuration["Configs:Database"])
+                switch (_configuration["Configs:Provider"])
                 {
                     case "mysql":
                     case "mariadb":
-                        optionsBuilder.UseMySql(ServerVersion.AutoDetect(_configuration.GetConnectionString("MySqlConnection")));
+                        optionsBuilder.UseMySql(
+                            @"Server=172.17.0.1;Port=3306;Database=managerapi;Uid=regis;Pwd=root",
+                            new MySqlServerVersion(new Version(10, 6, 4))
+                        );
                         break;
 
                     case "sqlserver":
