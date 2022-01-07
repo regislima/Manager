@@ -1,6 +1,6 @@
 using System;
 using AutoMapper;
-using Manager.Domain.entities;
+using Manager.Domain.Entities;
 using Manager.Security.Criptography;
 using Manager.Services.DTO;
 using Microsoft.Extensions.Configuration;

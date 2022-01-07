@@ -1,6 +1,6 @@
 using System;
 using Manager.Core.Extensions;
-using Manager.Domain.entities;
+using Manager.Domain.Entities;
 using Manager.Infra.Mappings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

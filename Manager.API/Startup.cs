@@ -1,7 +1,7 @@
 using System.Text;
 using AutoMapper;
 using Manager.API.ViewModels;
-using Manager.Domain.entities;
+using Manager.Domain.Entities;
 using Manager.Infra.Context;
 using Manager.Infra.Interfaces;
 using Manager.Infra.Repositories;

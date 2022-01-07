@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Manager.Core.Exceptions;
 using Manager.Core.Extensions;
-using Manager.Domain.entities;
+using Manager.Domain.Entities;
 using Manager.Infra.Interfaces;
 using Manager.Security.Criptography;
 using Manager.Services.DTO;

@@ -20,7 +20,7 @@ namespace Manager.Infra.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 64)
                 .HasAnnotation("ProductVersion", "5.0.12");
 
-            modelBuilder.Entity("Manager.Domain.entities.User", b =>
+            modelBuilder.Entity("Manager.Domain.Entities.User", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()

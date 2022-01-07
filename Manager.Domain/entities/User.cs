@@ -4,7 +4,7 @@ using FluentValidation.Results;
 using Manager.Core.Exceptions;
 using Manager.Domain.Validators;
 
-namespace Manager.Domain.entities
+namespace Manager.Domain.Entities
 {
     public class User : Base
     {

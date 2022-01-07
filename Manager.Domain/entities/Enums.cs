@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace Manager.Domain.entities
+namespace Manager.Domain.Entities
 {
     public enum Role
     {

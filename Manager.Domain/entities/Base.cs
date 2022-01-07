@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System;
-namespace Manager.Domain.entities
+namespace Manager.Domain.Entities
 {
     public abstract class Base
     {

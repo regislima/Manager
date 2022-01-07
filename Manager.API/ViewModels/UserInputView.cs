@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using Manager.Domain.entities;
+using Manager.Domain.Entities;
 
 namespace Manager.API.ViewModels
 {
